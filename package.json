@@ -1,0 +1,11 @@
+{
+  "name": "node-ready",
+  "version": "1.0.0",
+  "description": "nodeReady('body').run(function(){document.body.className = 'foo';});",
+  "author": "Devin Rhode <devinrhode2@gmail.com>",
+  "main": "node-ready.js",
+  "preferGlobal": false,
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
