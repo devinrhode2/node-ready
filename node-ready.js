@@ -7,7 +7,7 @@
 //if readyState === 'complete' && onload has fired... then fallback to DOMSubtreeModified... but tame the events down to 50 millisecond chunks
 
 
-var nodeReady = function nodeReady(call, readyCallback){
+var nodeReady = function nodeReady(call, readyCallback, timeout){
   'use strict';//steppin it up!
   var box = typeof call; //our one and only var...?!
   if (box === 'string') {
@@ -34,11 +34,31 @@ var nodeReady = function nodeReady(call, readyCallback){
   if (box) {
     readyCallback(box);
   } else {
-    setTimeout(function nodeReadyTimeoutCall(){
-      
-    }, 500);
+    if (typeof timeout !== 'undefined') {
+      timeout = 50;
+    }
+    
+    //schedule the callback immediately...?
+    setTimeout(function nodeReadyMainTimeoutCallback(){
+      if (box) {
+        nodeReady(call, readyCallback);
+      }
+    }, timeout);
+    
+    setTimeout(function nodeReadyTimeoutCallback(){
+      if (nodeReady.onload && nodeReady.DOMContentLoaded) {
+        
+      }
+    }, timeout/2);
   }
 };
-nodeReady.getListeners = function nodeReadyGetListeners(){
-  //? maybe
-};
+
+nodeReady.onload = false;
+window.addEventListener('load', function windowOnLoad(){
+  nodeReady.onload = true;
+}, false);
+
+nodeReady.DOMContentLoaded = false;
+document.addEventListener('DOMContentLoaded', function DOMContentLoadedListener(){
+  nodeReady.DOMContentLoaded = true;
+}, false);
