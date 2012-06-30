@@ -5,27 +5,26 @@ Instead of one big f***ing slow/lame/heavy/overweight DOMReady event, Node-ready
 
 Like:
     
-    nodeReady('body', function(){ //I don't know the best api for this yet.
+    nodeReady('document.body', function(){
       //yay! document.body is usable:
       document.body.appendChild();
-      nodeReady({id: 'main'}, function(main){ //I may do something like: nodeReady(getId('main'), function(main){}) if possible.
+      nodeReady('document.getElementById("main")', function(main){ //first parameter becomes the node from your DOM call.
         //yay! I got the working main node:
         main.appendChild();
         //you don't have to specify a ready node callback parameter, but it's recommend for performance.
-        //we've already retrieved the node, so you don't have to call getElementById again.
+        //we've already retrieved the node for you, so you don't have to call getElementById again.
       });
     });
     
-####Being more efficient:
-
-Node-ready is different. Because of the methods available with the today's DOM and the nature of it's duty, it doesn't accept element selectors for nodes. This is on purpose. You can, however, have multi-level nodeReady callbacks walking to the exact node you need.
-
-    nodeReady('der I'm in the middle of development!');
 
 Install
 ---------------
 
-    npm install node-ready
+Because nodeReady was soo small, and because you probably want to use getId and getClass for getting elements off the dom, I included it with extension-include:
+
+    npm install extension-include
+    
+You can also pluck it directly out of extension-include if you so choose from [that repository](https://github.com/devinrhode2/extension-include).
 
 Creator
 ---------------
